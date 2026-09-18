@@ -1,1061 +1,611 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ProstateAI Research – Prof. Abdelkrim BERROUKCHE</title>
-
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
     <style>
-        /* --------------------------------------------------
-           RESET & BASE
-        -------------------------------------------------- */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --primary: #0a3d2e;
-            --primary-light: #1a5f48;
-            --primary-dark: #06281e;
-            --primary-gradient: linear-gradient(135deg, #0a3d2e 0%, #1a6b4f 100%);
-            --accent: #d4a148;
-            --accent-light: #f0c96e;
-            --accent-dark: #b8922f;
-            --gold-glow: rgba(212, 161, 72, 0.25);
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
-            --success: #0b7e4d;
-            --success-bg: #ecfdf5;
-            --warning: #b45309;
-            --warning-bg: #fffbeb;
-            --danger: #b91c1c;
-            --danger-bg: #fef2f2;
-            --radius: 12px;
-            --shadow: 0 4px 24px rgba(10, 61, 46, 0.08);
-            --shadow-lg: 0 12px 40px rgba(10, 61, 46, 0.12);
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-800);
-            line-height: 1.5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --------------------------------------------------
-           HEADER
-        -------------------------------------------------- */
-        .site-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 0.85rem 1.5rem;
-            border-bottom: 3px solid var(--accent);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-        }
-
-        .header-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .brand-icon {
-            font-size: 1.6rem;
-            color: var(--accent);
-        }
-
-        .brand-name {
-            font-size: 1.35rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .brand-name span {
-            color: var(--accent);
-        }
-
-        .brand-tagline {
-            display: block;
-            font-size: 0.68rem;
-            opacity: 0.75;
-            font-weight: 400;
-            margin-top: -2px;
-        }
-
-        .founder-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 50px;
-            padding: 0.35rem 0.9rem 0.35rem 0.4rem;
-            backdrop-filter: blur(6px);
-        }
-
-        .founder-badge .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent);
-            background: var(--accent);
-        }
-
-        .founder-info {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.25;
-        }
-
-        .founder-name {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .founder-affil {
-            font-size: 0.62rem;
-            opacity: 0.8;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .algeria-badge .flag {
-            font-size: 0.75rem;
-        }
-
-        /* --------------------------------------------------
-           HERO
-        -------------------------------------------------- */
-        .hero {
-            background: var(--primary-gradient);
-            color: white;
-            text-align: center;
-            padding: 2.2rem 1.5rem 2.5rem;
-            position: relative;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-
-        .hero-inner {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .hero h1 i {
-            color: var(--accent);
-        }
-
-        .hero p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            max-width: 580px;
-            margin: 0 auto 0.9rem;
-            line-height: 1.55;
-        }
-
-        .hero-meta {
-            font-size: 0.78rem;
-            opacity: 0.75;
-            margin-bottom: 1rem;
-        }
-
-        .prototype-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 50px;
-            padding: 0.35rem 1rem;
-            font-size: 0.72rem;
-            font-weight: 500;
-        }
-
-        .prototype-badge i {
-            color: var(--accent);
-        }
-
-        /* --------------------------------------------------
-           MAIN LAYOUT
-        -------------------------------------------------- */
-        main {
-            flex: 1;
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 1.8rem 1.2rem 3rem;
-        }
-
-        .app-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            align-items: start;
-        }
-
-        @media (max-width: 820px) {
-            .app-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* --------------------------------------------------
-           CARDS
-        -------------------------------------------------- */
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.4rem 1.5rem 1.5rem;
-            border: 1px solid var(--gray-200);
-        }
-
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.2rem;
-            position: relative;
-            padding-bottom: 0.55rem;
-        }
-
-        .card-title .accent-line {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 48px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), transparent);
-            border-radius: 2px;
-        }
-
-        .card-title i {
-            color: var(--accent);
-        }
-
-        /* --------------------------------------------------
-           FORM
-        -------------------------------------------------- */
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.3rem;
-        }
-
-        .form-group .hint {
-            font-weight: 400;
-            color: var(--gray-400);
-            font-size: 0.72rem;
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-with-icon .icon-left {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-400);
-            font-size: 0.85rem;
-            pointer-events: none;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.6rem 0.75rem 0.6rem 2.3rem;
-            border: 1.5px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-family: inherit;
-            color: var(--gray-800);
-            background: var(--gray-50);
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(26, 95, 72, 0.12);
-            background: white;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.45rem;
-            padding: 0.7rem 1.3rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            margin-top: 0.4rem;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(10, 61, 46, 0.25);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .gold-arrow {
-            color: var(--accent);
-            font-size: 0.8rem;
-        }
-
-        .spinner {
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* --------------------------------------------------
-           RESULTS
-        -------------------------------------------------- */
-        .results-panel {
-            position: sticky;
-            top: 5.5rem;
-        }
-
-        .result-item {
-            margin-bottom: 0.7rem;
-        }
-
-        .result-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-            color: var(--gray-500);
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .result-label i {
-            color: var(--accent);
-            font-size: 0.7rem;
-        }
-
-        .result-value {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        .result-value .unit {
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--gray-500);
-        }
-
-        .result-divider {
-            border: none;
-            border-top: 1px solid var(--gray-200);
-            margin: 0.75rem 0;
-        }
-
-        .result-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.3rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .result-badge.success {
-            background: var(--success-bg);
-            color: var(--success);
-        }
-
-        .result-badge.warning {
-            background: var(--warning-bg);
-            color: var(--warning);
-        }
-
-        .result-badge.danger {
-            background: var(--danger-bg);
-            color: var(--danger);
-        }
-
-        .clinical-note {
-            background: var(--gray-50);
-            border-left: 3px solid var(--accent);
-            padding: 0.65rem 0.85rem;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.8rem;
-            color: var(--gray-600);
-            margin: 0.9rem 0 1rem;
-            line-height: 1.45;
-        }
-
-        .clinical-note i {
-            color: var(--accent);
-            margin-right: 0.3rem;
-        }
-
-        .struct-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 8px;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            color: var(--gray-600);
-            flex-wrap: wrap;
-        }
-
-        .struct-badge i {
-            color: var(--primary);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2rem 1rem;
-            color: var(--gray-400);
-            font-size: 0.88rem;
-        }
-
-        .empty-state i {
-            font-size: 2rem;
-            margin-bottom: 0.6rem;
-            display: block;
-            color: var(--gray-300);
-        }
-
-        /* --------------------------------------------------
-           FOOTER
-        -------------------------------------------------- */
-        .site-footer {
-            background: var(--primary-dark);
-            color: rgba(255,255,255,0.7);
-            padding: 1.1rem 1.5rem;
-            font-size: 0.72rem;
-            border-top: 2px solid var(--accent);
-        }
-
-        .footer-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .footer-brand {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .disclaimer {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0.8rem 1.2rem 1.2rem;
-            font-size: 0.7rem;
-            color: var(--gray-500);
-            text-align: center;
-            line-height: 1.4;
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --primary:#0a3d2e;--primary-light:#1a5f48;--primary-dark:#06281e;
+            --primary-gradient:linear-gradient(135deg,#0a3d2e 0%,#1a6b4f 100%);
+            --accent:#d4a148;--accent-light:#f0c96e;
+            --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;
+            --gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;
+            --gray-800:#1e293b;--gray-900:#0f172a;
+            --success:#0b7e4d;--success-bg:#ecfdf5;--warning:#b45309;--warning-bg:#fffbeb;
+            --danger:#b91c1c;--danger-bg:#fef2f2;--radius:12px;
+            --shadow:0 4px 24px rgba(10,61,46,.08);
+        }
+        html{font-size:16px;scroll-behavior:smooth}
+        body{font-family:'Inter',system-ui,sans-serif;background:var(--gray-50);color:var(--gray-800);line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+        body.lang-ar{font-family:'Noto Sans Arabic','Inter',system-ui,sans-serif}
+        body.lang-ar .founder-name,body.lang-ar .founder-affil,body.lang-ar .card-title,body.lang-ar label,body.lang-ar .result-label,body.lang-ar .clinical-note,body.lang-ar .hero p,body.lang-ar .hero h1,body.lang-ar .prototype-badge,body.lang-ar .disclaimer,body.lang-ar .footer-inner,body.lang-ar .btn{letter-spacing:0}
+
+        /* Header */
+        .site-header{background:var(--primary-gradient);color:#fff;padding:.85rem 1.5rem;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+        .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+        .brand{display:flex;align-items:center;gap:.7rem}
+        .brand-icon{font-size:1.6rem;color:var(--accent)}
+        .brand-name{font-size:1.35rem;font-weight:800;letter-spacing:-.5px}
+        .brand-name span{color:var(--accent)}
+        .brand-tagline{display:block;font-size:.68rem;opacity:.75;font-weight:400;margin-top:-2px}
+        .header-right{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+        .lang-switcher{display:flex;background:rgba(255,255,255,.1);border-radius:50px;overflow:hidden;border:1px solid rgba(255,255,255,.15)}
+        .lang-btn{background:transparent;border:none;color:rgba(255,255,255,.75);padding:.3rem .7rem;font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+        .lang-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
+        .lang-btn.active{background:var(--accent);color:var(--primary-dark)}
+        .founder-badge{display:flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:.35rem .9rem .35rem .4rem}
+        .founder-badge .avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);background:var(--accent)}
+        .founder-info{display:flex;flex-direction:column;line-height:1.25}
+        .founder-name{font-size:.78rem;font-weight:600;color:#fff}
+        .founder-affil{font-size:.62rem;opacity:.8;display:flex;align-items:center;gap:.25rem}
+
+        /* Hero */
+        .hero{background:var(--primary-gradient);color:#fff;text-align:center;padding:2.2rem 1.5rem 2.5rem;position:relative}
+        .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+        .hero-inner{max-width:700px;margin:0 auto}
+        .hero h1{font-size:1.75rem;font-weight:800;margin-bottom:.6rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+        .hero h1 i{color:var(--accent)}
+        .hero p{font-size:.95rem;opacity:.9;max-width:580px;margin:0 auto .9rem;line-height:1.55}
+        .hero-meta{font-size:.78rem;opacity:.75;margin-bottom:1rem}
+        .prototype-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50px;padding:.35rem 1rem;font-size:.72rem;font-weight:500}
+        .prototype-badge i{color:var(--accent)}
+
+        /* Main */
+        main{flex:1;max-width:1100px;width:100%;margin:0 auto;padding:1.8rem 1.2rem 2rem}
+        .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start}
+        @media(max-width:820px){.app-grid{grid-template-columns:1fr}}
+        .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.4rem 1.5rem 1.5rem;border:1px solid var(--gray-200)}
+        .card-title{font-size:1.05rem;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:.5rem;margin-bottom:1.2rem;position:relative;padding-bottom:.55rem}
+        .card-title .accent-line{position:absolute;bottom:0;left:0;width:48px;height:3px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:2px}
+        body.lang-ar .card-title .accent-line{left:auto;right:0;background:linear-gradient(270deg,var(--accent),transparent)}
+        .card-title i{color:var(--accent)}
+
+        /* Form */
+        .form-group{margin-bottom:1rem}
+        .form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--gray-700);margin-bottom:.3rem}
+        .form-group .hint{font-weight:400;color:var(--gray-400);font-size:.72rem}
+        .input-with-icon{position:relative}
+        .input-with-icon .icon-left{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:var(--gray-400);font-size:.85rem;pointer-events:none}
+        body.lang-ar .input-with-icon .icon-left{left:auto;right:.75rem}
+        .form-control{width:100%;padding:.6rem .75rem .6rem 2.3rem;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.9rem;font-family:inherit;color:var(--gray-800);background:var(--gray-50);transition:border-color .2s,box-shadow .2s}
+        body.lang-ar .form-control{padding:.6rem 2.3rem .6rem .75rem;text-align:right}
+        .form-control:focus{outline:none;border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(26,95,72,.12);background:#fff}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:.7rem 1.3rem;border:none;border-radius:8px;font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
+        .btn-primary{width:100%;background:var(--primary);color:#fff;margin-top:.4rem}
+        .btn-primary:hover{background:var(--primary-light);transform:translateY(-1px);box-shadow:0 4px 14px rgba(10,61,46,.25)}
+        .btn-primary:disabled{opacity:.7;cursor:not-allowed;transform:none}
+        .btn-secondary{width:100%;background:#fff;color:var(--primary);border:1.5px solid var(--primary);margin-top:.6rem}
+        .btn-secondary:hover{background:var(--gray-50)}
+        .gold-arrow{color:var(--accent);font-size:.8rem}
+        .spinner{animation:spin .8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* Results */
+        .results-panel{position:sticky;top:5.5rem}
+        .result-item{margin-bottom:.7rem}
+        .result-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--gray-500);display:flex;align-items:center;gap:.35rem;margin-bottom:.2rem}
+        body.lang-ar .result-label{letter-spacing:0;text-transform:none}
+        .result-label i{color:var(--accent);font-size:.7rem}
+        .result-value{font-size:1.35rem;font-weight:700;color:var(--primary-dark)}
+        .result-value .unit{font-size:.78rem;font-weight:500;color:var(--gray-500)}
+        .result-divider{border:none;border-top:1px solid var(--gray-200);margin:.75rem 0}
+        .result-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:50px;font-size:.8rem;font-weight:600}
+        .result-badge.success{background:var(--success-bg);color:var(--success)}
+        .result-badge.warning{background:var(--warning-bg);color:var(--warning)}
+        .result-badge.danger{background:var(--danger-bg);color:var(--danger)}
+        .clinical-note{background:var(--gray-50);border-left:3px solid var(--accent);padding:.65rem .85rem;border-radius:0 8px 8px 0;font-size:.8rem;color:var(--gray-600);margin:.9rem 0 1rem;line-height:1.45}
+        body.lang-ar .clinical-note{border-left:none;border-right:3px solid var(--accent);border-radius:8px 0 0 8px}
+        .clinical-note i{color:var(--accent);margin-right:.3rem}
+        body.lang-ar .clinical-note i{margin-right:0;margin-left:.3rem}
+        .struct-badge{display:flex;align-items:center;gap:.4rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.5rem .75rem;font-size:.75rem;color:var(--gray-600);flex-wrap:wrap}
+        .struct-badge i{color:var(--primary)}
+        .empty-state{text-align:center;padding:2rem 1rem;color:var(--gray-400);font-size:.88rem}
+        .empty-state i{font-size:2rem;margin-bottom:.6rem;display:block;color:var(--gray-300)}
+
+        /* Footer */
+        .site-footer{background:var(--primary-dark);color:rgba(255,255,255,.7);padding:1.1rem 1.5rem;font-size:.72rem;border-top:2px solid var(--accent)}
+        .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+        .footer-brand{color:var(--accent);font-weight:600}
+        .disclaimer{max-width:1100px;margin:0 auto;padding:.8rem 1.2rem 1.2rem;font-size:.7rem;color:var(--gray-500);text-align:center;line-height:1.4}
+
+        /* Print */
+        @media print{
+            .site-header,.hero,.btn,.lang-switcher,.disclaimer{display:none!important}
+            .app-grid{grid-template-columns:1fr}
+            .card{box-shadow:none;border:1px solid #ccc}
+            body{background:#fff}
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    HEADER
-    ============================================================ -->
-    <header class="site-header">
-        <div class="header-inner">
-            <div class="brand">
-                <i class="fas fa-dna brand-icon" aria-hidden="true"></i>
-                <div>
-                    <div class="brand-name">Prostate<span>AI</span></div>
-                    <span class="brand-tagline">Research · Kinetics · Structural Biochemistry</span>
-                </div>
+<header class="site-header">
+    <div class="header-inner">
+        <div class="brand">
+            <i class="fas fa-dna brand-icon" aria-hidden="true"></i>
+            <div>
+                <div class="brand-name">Prostate<span>AI</span></div>
+                <span class="brand-tagline" data-i18n="tagline">Research · Kinetics · Structural Biochemistry</span>
             </div>
-
+        </div>
+        <div class="header-right">
+            <div class="lang-switcher">
+                <button type="button" class="lang-btn active" data-lang="en">EN</button>
+                <button type="button" class="lang-btn" data-lang="fr">FR</button>
+                <button type="button" class="lang-btn" data-lang="ar">العربية</button>
+            </div>
             <div class="founder-badge">
                 <img src="Real%20picture%20AbdBerrou.png" alt="Prof. Abdelkrim BERROUKCHE" class="avatar" />
                 <div class="founder-info">
                     <span class="founder-name">
-                        <i class="fas fa-user-graduate" style="font-size:0.6rem;opacity:0.6;margin-right:0.3rem;" aria-hidden="true"></i>
+                        <i class="fas fa-user-graduate" style="font-size:.6rem;opacity:.6;margin-right:.3rem;" aria-hidden="true"></i>
                         Prof. Abdelkrim BERROUKCHE
                     </span>
                     <span class="founder-affil">
                         <i class="fas fa-university" aria-hidden="true"></i>
-                        Faculty of Medicine · Dr. Moulay-Tahar University, Saïda
-                        <span class="algeria-badge"><span class="flag">🇩🇿</span></span>
+                        <span data-i18n="affiliation">Faculty of Medicine · Dr. Moulay-Tahar University, Saïda</span>
+                        <span class="flag">🇩🇿</span>
                     </span>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- ============================================================
-    HERO
-    ============================================================ -->
-    <section class="hero">
-        <div class="hero-inner">
-            <h1><i class="fas fa-microscope" aria-hidden="true"></i> AI-Powered PSA Kinetics</h1>
-            <p>
-                Translating molecular kinetics and structural biochemistry into clinical insight
-                for early prostate cancer risk stratification.
-            </p>
-            <p class="hero-meta">
-                <i class="fas fa-user-md" aria-hidden="true"></i>
-                Research led by Prof. Abdelkrim BERROUKCHE · Biochemistry Unit
-            </p>
-            <div class="prototype-badge">
-                <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                Research prototype · Not a diagnostic device
-            </div>
+<section class="hero">
+    <div class="hero-inner">
+        <h1><i class="fas fa-microscope" aria-hidden="true"></i> <span data-i18n="heroTitle">AI-Powered PSA Kinetics</span></h1>
+        <p data-i18n="heroDesc">Translating molecular kinetics and structural biochemistry into clinical insight for early prostate cancer risk stratification.</p>
+        <p class="hero-meta">
+            <i class="fas fa-user-md" aria-hidden="true"></i>
+            <span data-i18n="heroMeta">Research led by Prof. Abdelkrim BERROUKCHE · Biochemistry Unit</span>
+        </p>
+        <div class="prototype-badge">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            <span data-i18n="prototypeBadge">Research prototype · Not a diagnostic device</span>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ============================================================
-    MAIN
-    ============================================================ -->
-    <main>
-        <div class="app-grid">
-
-            <!-- LEFT: FORM -->
-            <section class="card" aria-label="PSA kinetics input form">
-                <h2 class="card-title">
-                    <i class="fas fa-sliders-h" aria-hidden="true"></i>
-                    PSA Kinetics Analysis
-                    <span class="accent-line"></span>
-                </h2>
-
-                <form id="kineticsForm" novalidate>
-                    <!-- Age -->
-                    <div class="form-group">
-                        <label for="ageInput">
-                            Age (years)
-                            <span class="hint">· 40–85</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-calendar-alt icon-left" aria-hidden="true"></i>
-                            <input type="number" id="ageInput" class="form-control" placeholder="e.g. 60" min="40" max="85" value="60" required />
-                        </div>
-                    </div>
-
-                    <!-- Previous PSA Total -->
-                    <div class="form-group">
-                        <label for="prevPsaInput">
-                            Previous PSA total (ng/mL)
-                            <span class="hint">· 0.1–50</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-vial icon-left" aria-hidden="true"></i>
-                            <input type="number" id="prevPsaInput" class="form-control" placeholder="e.g. 2.00" step="0.01" min="0.1" max="50" value="2.00" required />
-                        </div>
-                    </div>
-
-                    <!-- Current PSA Total -->
-                    <div class="form-group">
-                        <label for="currPsaInput">
-                            Current PSA total (ng/mL)
-                            <span class="hint">· 0.1–50 · threshold 4 ng/mL</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-vial icon-left" aria-hidden="true"></i>
-                            <input type="number" id="currPsaInput" class="form-control" placeholder="e.g. 3.00" step="0.01" min="0.1" max="50" value="3.00" required />
-                        </div>
-                    </div>
-
-                    <!-- Free PSA -->
-                    <div class="form-group">
-                        <label for="freePsaInput">
-                            Free PSA / PSA libre (ng/mL)
-                            <span class="hint">· optional but recommended</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-flask icon-left" aria-hidden="true"></i>
-                            <input type="number" id="freePsaInput" class="form-control" placeholder="e.g. 0.60" step="0.01" min="0" max="20" />
-                        </div>
-                    </div>
-
-                    <!-- Prostate Volume -->
-                    <div class="form-group">
-                        <label for="volumeInput">
-                            Prostate volume (cm³)
-                            <span class="hint">· for PSA density</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-expand icon-left" aria-hidden="true"></i>
-                            <input type="number" id="volumeInput" class="form-control" placeholder="e.g. 40" step="0.1" min="10" max="200" />
-                        </div>
-                    </div>
-
-                    <!-- Time interval -->
-                    <div class="form-group">
-                        <label for="intervalInput">
-                            Time interval (months)
-                            <span class="hint">· 1–60</span>
-                        </label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-clock icon-left" aria-hidden="true"></i>
-                            <input type="number" id="intervalInput" class="form-control" placeholder="e.g. 12" min="1" max="60" value="12" required />
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="analyzeBtn">
-                        <i class="fas fa-chart-line" aria-hidden="true"></i>
-                        Analyze PSA kinetics
-                        <i class="fas fa-arrow-right gold-arrow" aria-hidden="true"></i>
-                    </button>
-                </form>
-
-                <p style="font-size:0.65rem;color:var(--gray-400);margin-top:1rem;text-align:center;letter-spacing:0.2px;">
-                    <i class="fas fa-book-open" aria-hidden="true" style="margin-right:0.3rem;"></i>
-                    Based on clinical thresholds (ACS & literature) · Vollmer 2019 kinetics model
-                    <span style="display:inline-block;margin:0 0.4rem;opacity:0.3;">·</span>
-                    <i class="fas fa-dna" aria-hidden="true" style="margin-right:0.3rem;"></i>
-                    Structural variant integration — <em>in development</em>
-                </p>
-            </section>
-
-            <!-- RIGHT: RESULTS -->
-            <section class="card results-panel" aria-label="Analysis results" id="resultsPanel">
-                <h2 class="card-title">
-                    <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-                    Analysis Results
-                    <span class="accent-line"></span>
-                </h2>
-
-                <div id="resultsContent">
-                    <div class="empty-state" id="emptyState">
-                        <i class="fas fa-chart-bar" aria-hidden="true"></i>
-                        Enter patient data and click <strong>Analyze</strong>
-                    </div>
-
-                    <div id="resultsData" style="display:none;">
-                        <!-- PSA Velocity -->
-                        <div class="result-item">
-                            <div class="result-label">
-                                <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
-                                PSA Velocity
-                            </div>
-                            <div class="result-value" id="velocityDisplay">
-                                0.00 <span class="unit">ng/mL/year</span>
-                            </div>
-                        </div>
-
-                        <hr class="result-divider" />
-
-                        <!-- Free / Total Ratio -->
-                        <div class="result-item">
-                            <div class="result-label">
-                                <i class="fas fa-percentage" aria-hidden="true"></i>
-                                Ratio Free / Total PSA
-                            </div>
-                            <div class="result-value" id="ratioDisplay">
-                                — <span class="unit">%</span>
-                            </div>
-                        </div>
-
-                        <hr class="result-divider" />
-
-                        <!-- Complexed PSA -->
-                        <div class="result-item">
-                            <div class="result-label">
-                                <i class="fas fa-link" aria-hidden="true"></i>
-                                Complexed PSA (lié)
-                            </div>
-                            <div class="result-value" id="complexedDisplay">
-                                — <span class="unit">ng/mL</span>
-                            </div>
-                        </div>
-
-                        <hr class="result-divider" />
-
-                        <!-- PSA Density -->
-                        <div class="result-item">
-                            <div class="result-label">
-                                <i class="fas fa-balance-scale" aria-hidden="true"></i>
-                                PSA Density
-                            </div>
-                            <div class="result-value" id="densityDisplay">
-                                — <span class="unit">ng/mL/cm³</span>
-                            </div>
-                        </div>
-
-                        <hr class="result-divider" />
-
-                        <!-- Risk Interpretation -->
-                        <div class="result-item">
-                            <div class="result-label">
-                                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                                Risk Interpretation
-                            </div>
-                            <div id="riskBadgeContainer">
-                                <span class="result-badge success" id="riskBadge">
-                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                    Stable
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="clinical-note" id="clinicalNote">
-                            <i class="fas fa-stethoscope" aria-hidden="true"></i>
-                            <span id="clinicalNoteText">Enter values and click Analyze.</span>
-                        </div>
-
-                        <!-- Alpha -->
-                        <div class="struct-badge">
-                            <i class="fas fa-cube" aria-hidden="true"></i>
-                            <span>
-                                <strong>α</strong> (release coefficient) —
-                                <span id="alphaDisplay" style="font-weight:600;color:var(--primary);">0.021</span>
-                                <span style="font-size:0.65rem;color:var(--gray-500);">ng/mL·g⁻¹·d⁻¹</span>
-                            </span>
-                            <span style="margin-left:auto;font-size:0.6rem;color:var(--gray-400);">
-                                <i class="fas fa-dna" aria-hidden="true"></i>
-                                structural
-                            </span>
-                        </div>
-
-                        <div style="margin-top:0.6rem;font-size:0.6rem;color:var(--gray-400);text-align:right;border-top:1px dashed var(--gray-200);padding-top:0.6rem;">
-                            <i class="fas fa-flask" aria-hidden="true" style="color:var(--accent);"></i>
-                            Prof. A. Berroukche · Biochemistry · PSA structural variants
-                        </div>
+<main>
+    <div class="app-grid">
+        <!-- FORM -->
+        <section class="card">
+            <h2 class="card-title">
+                <i class="fas fa-sliders-h" aria-hidden="true"></i>
+                <span data-i18n="formTitle">PSA Kinetics Analysis</span>
+                <span class="accent-line"></span>
+            </h2>
+            <form id="kineticsForm" novalidate>
+                <div class="form-group">
+                    <label for="ageInput"><span data-i18n="labelAge">Age (years)</span> <span class="hint">· 40–85</span></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-calendar-alt icon-left" aria-hidden="true"></i>
+                        <input type="number" id="ageInput" class="form-control" placeholder="60" min="40" max="85" value="60" required />
                     </div>
                 </div>
-            </section>
+                <div class="form-group">
+                    <label for="prevPsaInput"><span data-i18n="labelPrevPsa">Previous PSA total (ng/mL)</span> <span class="hint">· 0.1–50</span></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-vial icon-left" aria-hidden="true"></i>
+                        <input type="number" id="prevPsaInput" class="form-control" placeholder="2.00" step="0.01" min="0.1" max="50" value="2.00" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="currPsaInput"><span data-i18n="labelCurrPsa">Current PSA total (ng/mL)</span> <span class="hint">· 0.1–50</span></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-vial icon-left" aria-hidden="true"></i>
+                        <input type="number" id="currPsaInput" class="form-control" placeholder="3.00" step="0.01" min="0.1" max="50" value="3.00" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="freePsaInput"><span data-i18n="labelFreePsa">Free PSA (ng/mL)</span> <span class="hint" data-i18n="hintOptional">· optional</span></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-flask icon-left" aria-hidden="true"></i>
+                        <input type="number" id="freePsaInput" class="form-control" placeholder="0.60" step="0.01" min="0" max="20" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="volumeInput"><span data-i18n="labelVolume">Prostate volume (cm³)</span> <span class="hint" data-i18n="hintDensity">· for density</span></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-expand icon-left" aria-hidden="true"></i>
+                        <input type="number" id="volumeInput" class="form-control" placeholder="40" step="0.1" min="10" max="200" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="intervalInput"><span data-i18n="labelInterval">Time interval (months)</span> <span class="hint">· 1–60</span></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-clock icon-left" aria-hidden="true"></i>
+                        <input type="number" id="intervalInput" class="form-control" placeholder="12" min="1" max="60" value="12" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="analyzeBtn">
+                    <i class="fas fa-chart-line" aria-hidden="true"></i>
+                    <span data-i18n="btnAnalyze">Analyze PSA kinetics</span>
+                    <i class="fas fa-arrow-right gold-arrow" aria-hidden="true"></i>
+                </button>
+            </form>
+            <p style="font-size:.65rem;color:var(--gray-400);margin-top:1rem;text-align:center;">
+                <i class="fas fa-book-open" aria-hidden="true" style="margin-right:.3rem;"></i>
+                <span data-i18n="formFooter">Based on clinical thresholds (ACS) · Vollmer 2019 model</span>
+            </p>
+        </section>
 
-        </div>
-    </main>
+        <!-- RESULTS -->
+        <section class="card results-panel" id="resultsPanel">
+            <h2 class="card-title">
+                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                <span data-i18n="resultsTitle">Analysis Results</span>
+                <span class="accent-line"></span>
+            </h2>
+            <div id="resultsContent">
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                    <span data-i18n="emptyState">Enter patient data and click Analyze</span>
+                </div>
+                <div id="resultsData" style="display:none;">
+                    <div class="result-item">
+                        <div class="result-label"><i class="fas fa-tachometer-alt" aria-hidden="true"></i> <span data-i18n="resVelocity">PSA Velocity</span></div>
+                        <div class="result-value" id="velocityDisplay">0.00 <span class="unit">ng/mL/year</span></div>
+                    </div>
+                    <hr class="result-divider" />
+                    <div class="result-item">
+                        <div class="result-label"><i class="fas fa-percentage" aria-hidden="true"></i> <span data-i18n="resRatio">Ratio Free / Total PSA</span></div>
+                        <div class="result-value" id="ratioDisplay">— <span class="unit">%</span></div>
+                    </div>
+                    <hr class="result-divider" />
+                    <div class="result-item">
+                        <div class="result-label"><i class="fas fa-link" aria-hidden="true"></i> <span data-i18n="resComplexed">Complexed PSA</span></div>
+                        <div class="result-value" id="complexedDisplay">— <span class="unit">ng/mL</span></div>
+                    </div>
+                    <hr class="result-divider" />
+                    <div class="result-item">
+                        <div class="result-label"><i class="fas fa-balance-scale" aria-hidden="true"></i> <span data-i18n="resDensity">PSA Density</span></div>
+                        <div class="result-value" id="densityDisplay">— <span class="unit">ng/mL/cm³</span></div>
+                    </div>
+                    <hr class="result-divider" />
+                    <div class="result-item">
+                        <div class="result-label"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> <span data-i18n="resRisk">Risk Interpretation</span></div>
+                        <div id="riskBadgeContainer">
+                            <span class="result-badge success" id="riskBadge"><i class="fas fa-check-circle" aria-hidden="true"></i> <span id="riskBadgeText">Stable</span></span>
+                        </div>
+                    </div>
+                    <div class="clinical-note" id="clinicalNote">
+                        <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                        <span id="clinicalNoteText">—</span>
+                    </div>
+                    <div class="struct-badge">
+                        <i class="fas fa-cube" aria-hidden="true"></i>
+                        <span><strong>α</strong> — <span id="alphaDisplay">0.021</span> <span style="font-size:.65rem;color:var(--gray-500);">ng/mL·g⁻¹·d⁻¹</span></span>
+                        <span style="margin-left:auto;font-size:.6rem;color:var(--gray-400);"><i class="fas fa-dna" aria-hidden="true"></i> structural</span>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="saveBtn">
+                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                        <span data-i18n="btnSave">Save / Print as PDF</span>
+                    </button>
+                    <div style="margin-top:.6rem;font-size:.6rem;color:var(--gray-400);text-align:right;border-top:1px dashed var(--gray-200);padding-top:.6rem;">
+                        <i class="fas fa-flask" aria-hidden="true" style="color:var(--accent);"></i>
+                        Prof. A. Berroukche · Biochemistry · PSA structural variants
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
 
-    <p class="disclaimer">
-        Research prototype only. This application is not a medical diagnostic device and does not provide medical advice.
-        Always consult a qualified healthcare professional. Thresholds based on ACS recommendations and published literature.
-    </p>
+<p class="disclaimer" data-i18n="disclaimer">
+    Research prototype only. This application is not a medical diagnostic device and does not provide medical advice. Always consult a qualified healthcare professional.
+</p>
 
-    <!-- ============================================================
-    FOOTER
-    ============================================================ -->
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <span>
-                <i class="fas fa-copyright" aria-hidden="true"></i>
-                2026 · <span class="footer-brand">ProstateAI Research</span>
-            </span>
-            <span>
-                <i class="fas fa-user-tie" aria-hidden="true"></i>
-                Prof. Abdelkrim BERROUKCHE
-            </span>
-            <span>
-                Faculty of Medicine · Dr. Moulay-Tahar University, Saïda 🇩🇿
-            </span>
-        </div>
-    </footer>
+<footer class="site-footer">
+    <div class="footer-inner">
+        <span><i class="fas fa-copyright" aria-hidden="true"></i> 2026 · <span class="footer-brand">ProstateAI Research</span></span>
+        <span><i class="fas fa-user-tie" aria-hidden="true"></i> Prof. Abdelkrim BERROUKCHE</span>
+        <span data-i18n="footerAffil">Faculty of Medicine · Dr. Moulay-Tahar University, Saïda 🇩🇿</span>
+    </div>
+</footer>
 
-    <script>
-    (function () {
-        const form = document.getElementById('kineticsForm');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-
-        const ageInput = document.getElementById('ageInput');
-        const prevPsaInput = document.getElementById('prevPsaInput');
-        const currPsaInput = document.getElementById('currPsaInput');
-        const freePsaInput = document.getElementById('freePsaInput');
-        const volumeInput = document.getElementById('volumeInput');
-        const intervalInput = document.getElementById('intervalInput');
-
-        const emptyState = document.getElementById('emptyState');
-        const resultsData = document.getElementById('resultsData');
-        const velocityDisplay = document.getElementById('velocityDisplay');
-        const ratioDisplay = document.getElementById('ratioDisplay');
-        const complexedDisplay = document.getElementById('complexedDisplay');
-        const densityDisplay = document.getElementById('densityDisplay');
-        const riskBadge = document.getElementById('riskBadge');
-        const clinicalNoteText = document.getElementById('clinicalNoteText');
-        const alphaDisplay = document.getElementById('alphaDisplay');
-
-        function computeVelocity(prevPsa, currPsa, months) {
-            if (!months || months === 0) return 0;
-            return (currPsa - prevPsa) / (months / 12);
+<script>
+(function(){
+    const translations = {
+        en: {
+            tagline: "Research · Kinetics · Structural Biochemistry",
+            affiliation: "Faculty of Medicine · Dr. Moulay-Tahar University, Saïda",
+            heroTitle: "AI-Powered PSA Kinetics",
+            heroDesc: "Translating molecular kinetics and structural biochemistry into clinical insight for early prostate cancer risk stratification.",
+            heroMeta: "Research led by Prof. Abdelkrim BERROUKCHE · Biochemistry Unit",
+            prototypeBadge: "Research prototype · Not a diagnostic device",
+            formTitle: "PSA Kinetics Analysis",
+            labelAge: "Age (years)",
+            labelPrevPsa: "Previous PSA total (ng/mL)",
+            labelCurrPsa: "Current PSA total (ng/mL)",
+            labelFreePsa: "Free PSA (ng/mL)",
+            hintOptional: "· optional",
+            labelVolume: "Prostate volume (cm³)",
+            hintDensity: "· for density",
+            labelInterval: "Time interval (months)",
+            btnAnalyze: "Analyze PSA kinetics",
+            formFooter: "Based on clinical thresholds (ACS) · Vollmer 2019 model",
+            resultsTitle: "Analysis Results",
+            emptyState: "Enter patient data and click Analyze",
+            resVelocity: "PSA Velocity",
+            resRatio: "Ratio Free / Total PSA",
+            resComplexed: "Complexed PSA",
+            resDensity: "PSA Density",
+            resRisk: "Risk Interpretation",
+            btnSave: "Save / Print as PDF",
+            disclaimer: "Research prototype only. This application is not a medical diagnostic device and does not provide medical advice. Always consult a qualified healthcare professional.",
+            footerAffil: "Faculty of Medicine · Dr. Moulay-Tahar University, Saïda 🇩🇿",
+            riskLow: "Compatible with HBP / Low risk",
+            riskMid: "Gray zone / Suspicious",
+            riskHigh: "High suspicion of prostate cancer",
+            noteLow: "Overall parameters are more consistent with benign prostatic hyperplasia (HBP). Clinical correlation remains essential.",
+            noteMid: "Mixed findings. Further clinical evaluation (imaging, specialist opinion) may be appropriate.",
+            noteHigh: "Multiple parameters are concerning. Prompt urological evaluation is strongly recommended.",
+            analyzing: "Analyzing...",
+            alertAge: "Please enter a valid age between 40 and 85.",
+            alertPrev: "Please enter a valid previous PSA total (0.1 – 50 ng/mL).",
+            alertCurr: "Please enter a valid current PSA total (0.1 – 50 ng/mL).",
+            alertFree: "Free PSA must be between 0 and the current PSA total.",
+            alertVol: "Prostate volume must be between 10 and 200 cm³.",
+            alertInt: "Please enter a valid time interval (1 – 60 months)."
+        },
+        fr: {
+            tagline: "Recherche · Cinétique · Biochimie structurale",
+            affiliation: "Faculté de Médecine · Université Dr Moulay-Tahar, Saïda",
+            heroTitle: "Cinétique du PSA assistée par IA",
+            heroDesc: "Traduire la cinétique moléculaire et la biochimie structurale en insight clinique pour la stratification précoce du risque de cancer de la prostate.",
+            heroMeta: "Recherche dirigée par le Pr Abdelkrim BERROUKCHE · Unité de Biochimie",
+            prototypeBadge: "Prototype de recherche · Non un dispositif de diagnostic",
+            formTitle: "Analyse de la cinétique du PSA",
+            labelAge: "Âge (années)",
+            labelPrevPsa: "PSA total précédent (ng/mL)",
+            labelCurrPsa: "PSA total actuel (ng/mL)",
+            labelFreePsa: "PSA libre (ng/mL)",
+            hintOptional: "· optionnel",
+            labelVolume: "Volume prostatique (cm³)",
+            hintDensity: "· pour la densité",
+            labelInterval: "Intervalle de temps (mois)",
+            btnAnalyze: "Analyser la cinétique du PSA",
+            formFooter: "Basé sur les seuils cliniques (ACS) · Modèle Vollmer 2019",
+            resultsTitle: "Résultats de l'analyse",
+            emptyState: "Saisissez les données et cliquez sur Analyser",
+            resVelocity: "Vélocité du PSA",
+            resRatio: "Ratio PSA libre / total",
+            resComplexed: "PSA complexé (lié)",
+            resDensity: "Densité du PSA",
+            resRisk: "Interprétation du risque",
+            btnSave: "Enregistrer / Imprimer en PDF",
+            disclaimer: "Prototype de recherche uniquement. Cette application n'est pas un dispositif de diagnostic médical et ne fournit pas de conseils médicaux. Consultez toujours un professionnel de santé qualifié.",
+            footerAffil: "Faculté de Médecine · Université Dr Moulay-Tahar, Saïda 🇩🇿",
+            riskLow: "Compatible avec HBP / Risque faible",
+            riskMid: "Zone grise / Suspect",
+            riskHigh: "Forte suspicion de cancer de la prostate",
+            noteLow: "Les paramètres sont globalement compatibles avec une hypertrophie bénigne de la prostate (HBP). La corrélation clinique reste essentielle.",
+            noteMid: "Résultats mixtes. Une évaluation clinique complémentaire (imagerie, avis spécialisé) peut être appropriée.",
+            noteHigh: "Plusieurs paramètres sont préoccupants. Une évaluation urologique rapide est fortement recommandée.",
+            analyzing: "Analyse en cours...",
+            alertAge: "Veuillez entrer un âge valide entre 40 et 85 ans.",
+            alertPrev: "Veuillez entrer un PSA total précédent valide (0,1 – 50 ng/mL).",
+            alertCurr: "Veuillez entrer un PSA total actuel valide (0,1 – 50 ng/mL).",
+            alertFree: "Le PSA libre doit être entre 0 et le PSA total actuel.",
+            alertVol: "Le volume prostatique doit être entre 10 et 200 cm³.",
+            alertInt: "Veuillez entrer un intervalle de temps valide (1 – 60 mois)."
+        },
+        ar: {
+            tagline: "بحث · حركية · كيمياء حيوية هيكلية",
+            affiliation: "كلية الطب · جامعة الدكتور مولاي الطاهر، سعيدة",
+            heroTitle: "حركية مستضد البروستاتا النوعي بالذكاء الاصطناعي",
+            heroDesc: "تحويل الحركية الجزيئية والكيمياء الحيوية الهيكلية إلى رؤى سريرية للتصنيف المبكر لخطر سرطان البروستاتا.",
+            heroMeta: "بحث بإشراف الأستاذ الدكتور عبد الكريم بروكش · وحدة الكيمياء الحيوية",
+            prototypeBadge: "نموذج بحثي · ليس جهاز تشخيص طبي",
+            formTitle: "تحليل حركية مستضد البروستاتا النوعي",
+            labelAge: "العمر (سنوات)",
+            labelPrevPsa: "PSA الكلي السابق (نانوغرام/مل)",
+            labelCurrPsa: "PSA الكلي الحالي (نانوغرام/مل)",
+            labelFreePsa: "PSA الحر (نانوغرام/مل)",
+            hintOptional: "· اختياري",
+            labelVolume: "حجم البروستاتا (سم³)",
+            hintDensity: "· للكثافة",
+            labelInterval: "الفترة الزمنية (أشهر)",
+            btnAnalyze: "تحليل حركية PSA",
+            formFooter: "بناءً على العتبات السريرية (ACS) · نموذج فولمر 2019",
+            resultsTitle: "نتائج التحليل",
+            emptyState: "أدخل بيانات المريض ثم انقر على تحليل",
+            resVelocity: "سرعة PSA",
+            resRatio: "نسبة PSA الحر / الكلي",
+            resComplexed: "PSA المرتبط (المعقد)",
+            resDensity: "كثافة PSA",
+            resRisk: "تفسير الخطر",
+            btnSave: "حفظ / طباعة PDF",
+            disclaimer: "نموذج بحثي فقط. هذا التطبيق ليس جهاز تشخيص طبي ولا يقدم نصائح طبية. استشر دائمًا أخصائي رعاية صحية مؤهل.",
+            footerAffil: "كلية الطب · جامعة الدكتور مولاي الطاهر، سعيدة 🇩🇿",
+            riskLow: "متوافق مع تضخم البروستاتا الحميد / خطر منخفض",
+            riskMid: "منطقة رمادية / مشبوه",
+            riskHigh: "اشتباه مرتفع بسرطان البروستاتا",
+            noteLow: "المعلمات متوافقة عمومًا مع تضخم البروستاتا الحميد. الارتباط السريري ضروري.",
+            noteMid: "نتائج مختلطة. قد يكون التقييم السريري الإضافي (تصوير، رأي متخصص) مناسبًا.",
+            noteHigh: "عدة معلمات مقلقة. يُوصى بشدة بتقييم مسالك بولية عاجل.",
+            analyzing: "جاري التحليل...",
+            alertAge: "يرجى إدخال عمر صحيح بين 40 و 85.",
+            alertPrev: "يرجى إدخال PSA كلي سابق صحيح (0.1 – 50 نانوغرام/مل).",
+            alertCurr: "يرجى إدخال PSA كلي حالي صحيح (0.1 – 50 نانوغرام/مل).",
+            alertFree: "يجب أن يكون PSA الحر بين 0 و PSA الكلي الحالي.",
+            alertVol: "يجب أن يكون حجم البروستاتا بين 10 و 200 سم³.",
+            alertInt: "يرجى إدخال فترة زمنية صحيحة (1 – 60 شهر)."
         }
+    };
 
-        function estimateAlpha(velocity, meanPsa) {
-            const beta = 0.216;
-            const V = 3.0;
-            const W = 25;
-            const velDaily = velocity / 365.25;
-            const numerator = velDaily + beta * meanPsa;
-            const alpha = numerator / (V * W);
-            return Math.max(0.001, Math.min(0.1, alpha));
-        }
+    let currentLang = 'en';
 
-        function renderResults(age, prevPsa, currPsa, freePsa, volume, months) {
-            const velocity = computeVelocity(prevPsa, currPsa, months);
-            const meanPsa = (prevPsa + currPsa) / 2;
-            const alpha = estimateAlpha(velocity, meanPsa);
+    function setLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        document.body.classList.remove('lang-en','lang-fr','lang-ar');
+        document.body.classList.add('lang-' + lang);
 
-            // 1. Velocity
-            velocityDisplay.innerHTML = velocity.toFixed(2) + ' <span class="unit">ng/mL/year</span>';
-
-            // 2. Free/Total ratio + Complexed PSA
-            let ratio = null;
-            let ratioText = '—';
-            let complexedText = '—';
-            if (freePsa !== null && !isNaN(freePsa) && currPsa > 0) {
-                if (freePsa > currPsa) freePsa = currPsa;
-                ratio = (freePsa / currPsa) * 100;
-                ratioText = ratio.toFixed(1);
-                complexedText = (currPsa - freePsa).toFixed(2);
-            }
-            ratioDisplay.innerHTML = ratioText + ' <span class="unit">%</span>';
-            complexedDisplay.innerHTML = complexedText + ' <span class="unit">ng/mL</span>';
-
-            // 3. Density
-            let density = null;
-            let densityText = '—';
-            if (volume !== null && !isNaN(volume) && volume > 0) {
-                density = currPsa / volume;
-                densityText = density.toFixed(3);
-            }
-            densityDisplay.innerHTML = densityText + ' <span class="unit">ng/mL/cm³</span>';
-
-            // 4. Alpha
-            alphaDisplay.textContent = alpha.toFixed(3);
-
-            // ===== Combined clinical interpretation (based on your document) =====
-            let score = 0;
-            let reasons = [];
-
-            // --- PSA total level ---
-            if (currPsa > 10) {
-                score += 3;
-                reasons.push('PSA total > 10 ng/mL (probability of cancer > 50%)');
-            } else if (currPsa >= 4) {
-                score += 1;
-                reasons.push('PSA total in gray zone 4–10 ng/mL (≈1 in 4 men have cancer on biopsy)');
-            }
-
-            // --- Velocity ---
-            const absVel = Math.abs(velocity);
-            if (absVel >= 0.75) {
-                score += 2;
-                reasons.push('PSA velocity ≥ 0.75 ng/mL/year (suspicious)');
-            }
-
-            // --- Free/Total ratio (ACS thresholds) ---
-            if (ratio !== null) {
-                if (ratio <= 10) {
-                    score += 3;
-                    reasons.push('Free/Total ratio ≤ 10% → higher cancer risk (ACS)');
-                } else if (ratio <= 25) {
-                    score += 1;
-                    reasons.push('Free/Total ratio 10–25% → intermediate zone');
-                } else {
-                    score -= 1;
-                    reasons.push('Free/Total ratio > 25% → lower cancer risk (favors HBP)');
-                }
-            }
-
-            // --- Density thresholds from your document ---
-            if (density !== null) {
-                if (density > 0.20) {
-                    score += 3;
-                    reasons.push('PSA density > 0.20 → high suspicion');
-                } else if (density >= 0.15) {
-                    score += 2;
-                    reasons.push('PSA density ≥ 0.15 → increased suspicion');
-                } else if (density >= 0.10) {
-                    score += 1;
-                    reasons.push('PSA density 0.10–0.15 → intermediate');
-                } else {
-                    score -= 1;
-                    reasons.push('PSA density < 0.10 → relatively low risk (favors HBP)');
-                }
-            }
-
-            // Final badge
-            let badgeClass = 'success';
-            let badgeIcon = 'fa-check-circle';
-            let badgeText = 'Compatible with HBP / Low risk';
-            let note = 'Overall parameters are more consistent with benign prostatic hyperplasia (HBP). Clinical correlation remains essential.';
-
-            if (score >= 6) {
-                badgeClass = 'danger';
-                badgeIcon = 'fa-times-circle';
-                badgeText = 'High suspicion of prostate cancer';
-                note = 'Multiple parameters are concerning. Prompt urological evaluation is strongly recommended.';
-            } else if (score >= 3) {
-                badgeClass = 'warning';
-                badgeIcon = 'fa-exclamation-circle';
-                badgeText = 'Gray zone / Suspicious';
-                note = 'Mixed findings. Further clinical evaluation (imaging, specialist opinion) may be appropriate.';
-            }
-
-            if (reasons.length > 0) {
-                note += ' Key points: ' + reasons.join(' · ');
-            }
-
-            riskBadge.className = 'result-badge ' + badgeClass;
-            riskBadge.innerHTML = '<i class="fas ' + badgeIcon + '" aria-hidden="true"></i> ' + badgeText;
-            clinicalNoteText.textContent = note;
-
-            emptyState.style.display = 'none';
-            resultsData.style.display = 'block';
-        }
-
-        function handleSubmit(e) {
-            e.preventDefault();
-
-            const age = parseFloat(ageInput.value);
-            const prevPsa = parseFloat(prevPsaInput.value);
-            const currPsa = parseFloat(currPsaInput.value);
-            const freePsa = freePsaInput.value.trim() === '' ? null : parseFloat(freePsaInput.value);
-            const volume = volumeInput.value.trim() === '' ? null : parseFloat(volumeInput.value);
-            const months = parseFloat(intervalInput.value);
-
-            if (isNaN(age) || age < 40 || age > 85) {
-                alert('Please enter a valid age between 40 and 85.');
-                ageInput.focus();
-                return;
-            }
-            if (isNaN(prevPsa) || prevPsa < 0.1 || prevPsa > 50) {
-                alert('Please enter a valid previous PSA total (0.1 – 50 ng/mL).');
-                prevPsaInput.focus();
-                return;
-            }
-            if (isNaN(currPsa) || currPsa < 0.1 || currPsa > 50) {
-                alert('Please enter a valid current PSA total (0.1 – 50 ng/mL).');
-                currPsaInput.focus();
-                return;
-            }
-            if (freePsa !== null && (isNaN(freePsa) || freePsa < 0 || freePsa > currPsa)) {
-                alert('Free PSA must be between 0 and the current PSA total.');
-                freePsaInput.focus();
-                return;
-            }
-            if (volume !== null && (isNaN(volume) || volume < 10 || volume > 200)) {
-                alert('Prostate volume must be between 10 and 200 cm³.');
-                volumeInput.focus();
-                return;
-            }
-            if (isNaN(months) || months < 1 || months > 60) {
-                alert('Please enter a valid time interval (1 – 60 months).');
-                intervalInput.focus();
-                return;
-            }
-
-            analyzeBtn.disabled = true;
-            analyzeBtn.innerHTML = '<i class="fas fa-spinner spinner" aria-hidden="true"></i> Analyzing...';
-
-            setTimeout(function () {
-                renderResults(age, prevPsa, currPsa, freePsa, volume, months);
-                analyzeBtn.disabled = false;
-                analyzeBtn.innerHTML = '<i class="fas fa-chart-line" aria-hidden="true"></i> Analyze PSA kinetics <i class="fas fa-arrow-right gold-arrow" aria-hidden="true"></i>';
-            }, 350);
-        }
-
-        form.addEventListener('submit', handleSubmit);
-
-        // Auto-run on load
-        window.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
-                renderResults(60, 2.0, 3.0, null, null, 12);
-            }, 200);
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
         });
-    })();
-    </script>
 
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+
+        try { localStorage.setItem('prostateai_lang', lang); } catch(e){}
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+    });
+
+    // Restore saved language
+    try {
+        const saved = localStorage.getItem('prostateai_lang');
+        if (saved && translations[saved]) setLanguage(saved);
+    } catch(e){}
+
+    // ===== Analysis logic =====
+    const form = document.getElementById('kineticsForm');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const ageInput = document.getElementById('ageInput');
+    const prevPsaInput = document.getElementById('prevPsaInput');
+    const currPsaInput = document.getElementById('currPsaInput');
+    const freePsaInput = document.getElementById('freePsaInput');
+    const volumeInput = document.getElementById('volumeInput');
+    const intervalInput = document.getElementById('intervalInput');
+    const emptyState = document.getElementById('emptyState');
+    const resultsData = document.getElementById('resultsData');
+    const velocityDisplay = document.getElementById('velocityDisplay');
+    const ratioDisplay = document.getElementById('ratioDisplay');
+    const complexedDisplay = document.getElementById('complexedDisplay');
+    const densityDisplay = document.getElementById('densityDisplay');
+    const riskBadge = document.getElementById('riskBadge');
+    const riskBadgeText = document.getElementById('riskBadgeText');
+    const clinicalNoteText = document.getElementById('clinicalNoteText');
+    const alphaDisplay = document.getElementById('alphaDisplay');
+    const saveBtn = document.getElementById('saveBtn');
+
+    function computeVelocity(prev, curr, months) {
+        if (!months) return 0;
+        return (curr - prev) / (months / 12);
+    }
+
+    function estimateAlpha(velocity, meanPsa) {
+        const beta = 0.216, V = 3.0, W = 25;
+        const velDaily = velocity / 365.25;
+        const alpha = (velDaily + beta * meanPsa) / (V * W);
+        return Math.max(0.001, Math.min(0.1, alpha));
+    }
+
+    function renderResults(age, prevPsa, currPsa, freePsa, volume, months) {
+        const t = translations[currentLang];
+        const velocity = computeVelocity(prevPsa, currPsa, months);
+        const meanPsa = (prevPsa + currPsa) / 2;
+        const alpha = estimateAlpha(velocity, meanPsa);
+
+        velocityDisplay.innerHTML = velocity.toFixed(2) + ' <span class="unit">ng/mL/year</span>';
+
+        let ratio = null, ratioText = '—', complexedText = '—';
+        if (freePsa !== null && !isNaN(freePsa) && currPsa > 0) {
+            if (freePsa > currPsa) freePsa = currPsa;
+            ratio = (freePsa / currPsa) * 100;
+            ratioText = ratio.toFixed(1);
+            complexedText = (currPsa - freePsa).toFixed(2);
+        }
+        ratioDisplay.innerHTML = ratioText + ' <span class="unit">%</span>';
+        complexedDisplay.innerHTML = complexedText + ' <span class="unit">ng/mL</span>';
+
+        let density = null, densityText = '—';
+        if (volume !== null && !isNaN(volume) && volume > 0) {
+            density = currPsa / volume;
+            densityText = density.toFixed(3);
+        }
+        densityDisplay.innerHTML = densityText + ' <span class="unit">ng/mL/cm³</span>';
+        alphaDisplay.textContent = alpha.toFixed(3);
+
+        // Scoring
+        let score = 0;
+        let reasons = [];
+        if (currPsa > 10) { score += 3; }
+        else if (currPsa >= 4) { score += 1; }
+        if (Math.abs(velocity) >= 0.75) score += 2;
+        if (ratio !== null) {
+            if (ratio <= 10) score += 3;
+            else if (ratio <= 25) score += 1;
+            else score -= 1;
+        }
+        if (density !== null) {
+            if (density > 0.20) score += 3;
+            else if (density >= 0.15) score += 2;
+            else if (density >= 0.10) score += 1;
+            else score -= 1;
+        }
+
+        let badgeClass = 'success', badgeIcon = 'fa-check-circle', badgeText = t.riskLow, note = t.noteLow;
+        if (score >= 6) {
+            badgeClass = 'danger'; badgeIcon = 'fa-times-circle'; badgeText = t.riskHigh; note = t.noteHigh;
+        } else if (score >= 3) {
+            badgeClass = 'warning'; badgeIcon = 'fa-exclamation-circle'; badgeText = t.riskMid; note = t.noteMid;
+        }
+
+        riskBadge.className = 'result-badge ' + badgeClass;
+        riskBadge.innerHTML = '<i class="fas ' + badgeIcon + '" aria-hidden="true"></i> <span>' + badgeText + '</span>';
+        clinicalNoteText.textContent = note;
+
+        emptyState.style.display = 'none';
+        resultsData.style.display = 'block';
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const t = translations[currentLang];
+        const age = parseFloat(ageInput.value);
+        const prevPsa = parseFloat(prevPsaInput.value);
+        const currPsa = parseFloat(currPsaInput.value);
+        const freePsa = freePsaInput.value.trim() === '' ? null : parseFloat(freePsaInput.value);
+        const volume = volumeInput.value.trim() === '' ? null : parseFloat(volumeInput.value);
+        const months = parseFloat(intervalInput.value);
+
+        if (isNaN(age) || age < 40 || age > 85) { alert(t.alertAge); ageInput.focus(); return; }
+        if (isNaN(prevPsa) || prevPsa < 0.1 || prevPsa > 50) { alert(t.alertPrev); prevPsaInput.focus(); return; }
+        if (isNaN(currPsa) || currPsa < 0.1 || currPsa > 50) { alert(t.alertCurr); currPsaInput.focus(); return; }
+        if (freePsa !== null && (isNaN(freePsa) || freePsa < 0 || freePsa > currPsa)) { alert(t.alertFree); freePsaInput.focus(); return; }
+        if (volume !== null && (isNaN(volume) || volume < 10 || volume > 200)) { alert(t.alertVol); volumeInput.focus(); return; }
+        if (isNaN(months) || months < 1 || months > 60) { alert(t.alertInt); intervalInput.focus(); return; }
+
+        analyzeBtn.disabled = true;
+        analyzeBtn.innerHTML = '<i class="fas fa-spinner spinner" aria-hidden="true"></i> ' + t.analyzing;
+
+        setTimeout(() => {
+            renderResults(age, prevPsa, currPsa, freePsa, volume, months);
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML = '<i class="fas fa-chart-line" aria-hidden="true"></i> <span data-i18n="btnAnalyze">' + t.btnAnalyze + '</span> <i class="fas fa-arrow-right gold-arrow" aria-hidden="true"></i>';
+        }, 350);
+    }
+
+    form.addEventListener('submit', handleSubmit);
+
+    // Save / Print PDF
+    saveBtn.addEventListener('click', () => {
+        window.print();
+    });
+
+    // Auto-run on load
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => renderResults(60, 2.0, 3.0, null, null, 12), 200);
+    });
+})();
+</script>
 </body>
 </html>
